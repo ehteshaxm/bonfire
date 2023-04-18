@@ -1,5 +1,6 @@
 import { HuddleIframe, huddleIframeApp } from '@huddle01/huddle01-iframe';
 import { useRouter } from 'next/router';
+import dynamic from 'next/dynamic';
 
 const MyApp = () => {
   const router = useRouter();
@@ -21,4 +22,6 @@ const MyApp = () => {
   return <HuddleIframe config={iframeConfig} />;
 };
 
-export default MyApp;
+export default dynamic(() => Promise.resolve(MyApp), {
+  ssr: false,
+});
