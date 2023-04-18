@@ -46,6 +46,7 @@ import {
   endBefore,
 } from 'firebase/firestore';
 import { db } from '../firebase';
+import axios from 'axios';
 
 export default function Home() {
   const [mType, setMType] = useState('/chat');
@@ -129,23 +130,43 @@ export default function Home() {
 
   async function createMeetingHandler() {
     if (user === null) {
-      navRef.openSignUpModal();
+      navRef.current.openSignUpModal();
       return;
     }
     setLoading(true);
-    const myCollectionRef = collection(db, 'active');
-    addDoc(myCollectionRef, {
-      title: title,
-      description: description,
-      category: category,
-      email: user.email,
-      pfp: user.reloadUserInfo.photoUrl,
-    })
-      .then(() => {
-        setLoading(false);
-        onClose();
-      })
-      .catch((error) => console.log(error));
+
+    axios
+      .post(
+        'https://iriko.testing.huddle01.com/api/v1/create-iframe-room',
+        {
+          title: title,
+          roomLocked: true,
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            'x-api-key': 'VwTZ4AGTxme9snANex9tep3NwvVMGfYd',
+          },
+        }
+      )
+      .then((response) => {
+        console.log('meeting created');
+        console.log(response);
+        const myCollectionRef = collection(db, 'active');
+        addDoc(myCollectionRef, {
+          title: title,
+          description: description,
+          category: category,
+          email: user.email,
+          pfp: user.reloadUserInfo.photoUrl,
+          roomId: response.data.data.roomId,
+        })
+          .then(() => {
+            setLoading(false);
+            onClose();
+          })
+          .catch((error) => console.log(error));
+      });
   }
 
   return (
@@ -205,7 +226,11 @@ export default function Home() {
                 size={'sm'}
                 focusBorderColor='black'
                 value={title}
-                onChange={(e) => setTitle(e.target.value)}
+                onChange={(e) => {
+                  if (title.length <= 75) {
+                    setTitle(e.target.value);
+                  }
+                }}
               />
               <FormHelperText fontSize={'xs'}>
                 title will get the most attention, make it catchy
@@ -219,7 +244,11 @@ export default function Home() {
                 size={'sm'}
                 focusBorderColor='black'
                 value={description}
-                onChange={(e) => setDescription(e.target.value)}
+                onChange={(e) => {
+                  if (description.length <= 160) {
+                    setDescription(e.target.value);
+                  }
+                }}
               />
               <FormHelperText fontSize={'xs'}>
                 elaborate the meeting title.
@@ -306,7 +335,13 @@ export default function Home() {
           {mType === '/chat' ? (
             <div
               className='hover:text-gray-400 cursor-pointer flex'
-              onClick={() => onOpen()}
+              onClick={() => {
+                if (user !== null) {
+                  onOpen();
+                } else {
+                  navRef.current.openSignUpModal();
+                }
+              }}
             >
               + create a meeting{' '}
               <div className='relative ml-2'>
@@ -338,6 +373,8 @@ export default function Home() {
                   pfp={meet.pfp}
                   email={meet.email}
                   category={meet.category}
+                  id={meet.id}
+                  roomId={meet.roomId}
                 />
               ))
             ) : (

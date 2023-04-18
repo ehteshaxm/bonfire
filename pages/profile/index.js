@@ -117,7 +117,11 @@ const Profile = () => {
                     p={2}
                     mt={3}
                     value={description}
-                    onChange={(e) => setDescription(e.target.value)}
+                    onChange={(e) => {
+                      if (description.length <= 200) {
+                        setDescription(e.target.value);
+                      }
+                    }}
                     fontSize={'xs'}
                     focusBorderColor='whatsApp'
                     placeholder='Tell us about yourself'
@@ -367,9 +371,7 @@ const Profile = () => {
       </div>
       <div className='mt-7 max-w-4xl mx-auto p-2 flex flex-wrap items-start justify-center'>
         <blockquote class='mt-10 text-md italic font-semibold text-right text-gray-400 dark:text-white'>
-          <p>
-            "This part is under construction 🛠️, Will be out soon..."
-          </p>
+          <p>"This part is under construction 🛠️, Will be out soon..."</p>
         </blockquote>
       </div>
     </div>
