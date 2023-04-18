@@ -6,14 +6,6 @@ const MyApp = () => {
 
   console.log(huddleIframeApp.methods);
 
-  // if (window !== undefined) {
-  // huddleIframeApp.on('peer-join', (data) => {
-  //   console.log('getting part details');
-  //   console.log(getParticipants());
-  // });
-
-  // console.log(huddleIframeApp.methods);
-
   huddleIframeApp.on('peer-join', (data) => {
     console.log('peer-join');
     console.log({ data });

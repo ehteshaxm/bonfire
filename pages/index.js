@@ -5,21 +5,14 @@ import {
   Modal,
   ModalOverlay,
   ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
   Button,
   useDisclosure,
-  Text,
-  Box,
   Select,
   Tooltip,
 } from '@chakra-ui/react';
 import {
   FormControl,
   FormLabel,
-  FormErrorMessage,
   FormHelperText,
   Input,
   Textarea,
@@ -27,16 +20,10 @@ import {
 import { useAuth } from '../context/AuthContext';
 import Stamp from '@/components/Stamp';
 import Event from '@/components/Event';
-import Footer from '@/components/Footer';
 import Loader from '@/components/Loader';
 import CustomEvent from '@/components/CustomEvent';
 import {
-  getFirestore,
-  doc,
-  getDoc,
   getDocs,
-  setDoc,
-  updateDoc,
   addDoc,
   query,
   collection,

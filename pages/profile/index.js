@@ -1,3 +1,4 @@
+/* eslint-disable react/no-children-prop */
 import React, { useEffect, useState } from 'react';
 import { Avatar, Image } from '@chakra-ui/react';
 import { useAuth } from '../../context/AuthContext';
@@ -7,27 +8,15 @@ import {
   Modal,
   ModalOverlay,
   ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
   Button,
   useDisclosure,
-  Text,
-  Box,
   Textarea,
   Input,
   InputGroup,
   InputLeftAddon,
 } from '@chakra-ui/react';
 import Meet from '@/components/Meet';
-import {
-  getFirestore,
-  doc,
-  getDoc,
-  setDoc,
-  updateDoc,
-} from 'firebase/firestore';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { db } from '../../firebase';
 
 const Profile = () => {
