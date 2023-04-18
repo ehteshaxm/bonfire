@@ -267,7 +267,7 @@ export default function Home() {
                   <option>🎙️ Chatting</option>
                   <option>🎮 Gaming</option>
                   <option>🎧 Music</option>
-                  <option>\_(ッ)_/ let's see</option>
+                  <option>\_(ッ)_/ {"let's see"}</option>
                 </Select>
                 <FormHelperText fontSize={'xs'}>
                   select a category
