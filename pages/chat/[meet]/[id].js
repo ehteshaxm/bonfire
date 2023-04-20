@@ -5,12 +5,7 @@ import dynamic from 'next/dynamic';
 const MyApp = () => {
   const router = useRouter();
 
-  console.log(huddleIframeApp.methods);
-
-  huddleIframeApp.on('peer-join', (data) => {
-    console.log('peer-join');
-    console.log({ data });
-  });
+  console.log(router);
 
   const iframeConfig = {
     roomUrl: `https://iframe.huddle01.com/${router.query.id}`,

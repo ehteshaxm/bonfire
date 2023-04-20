@@ -107,7 +107,7 @@ const Navbar = forwardRef((props, ref) => {
             <PopoverTrigger>
               <Avatar
                 size='sm'
-                name='Dan Abrahmov'
+                name={user.displayName}
                 src={user.reloadUserInfo.photoUrl}
                 _hover={{
                   opacity: '75%',

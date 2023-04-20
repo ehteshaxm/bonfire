@@ -25,7 +25,9 @@ import CustomEvent from '@/components/CustomEvent';
 import {
   getDocs,
   addDoc,
+  getDoc,
   query,
+  doc,
   collection,
   orderBy,
   limit,
@@ -43,6 +45,7 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
 
   const [meetings, setMeetings] = useState([]);
+  const [coWork, setCoWork] = useState([]);
   const [firstVisibleDoc, setFirstVisibleDoc] = useState(null);
   const [lastVisibleDoc, setLastVisibleDoc] = useState(null);
 
@@ -53,7 +56,21 @@ export default function Home() {
 
   useEffect(() => {
     fetchDocuments();
+    fetchCoWork();
   }, []);
+
+  async function fetchCoWork() {
+    const docRef = doc(db, 'cowork', 'main');
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      console.log([docSnap.data()]);
+      setCoWork([docSnap.data()]);
+    } else {
+      // docSnap.data() will be undefined in this case
+      console.log('No such document!');
+    }
+  }
 
   // Fetch the first batch of documents
   const fetchDocuments = async () => {
@@ -150,6 +167,17 @@ export default function Home() {
         })
           .then(() => {
             setLoading(false);
+            addDoc(collection(db, 'meetings'), {
+              title: title,
+              description: description,
+              category: category,
+              email: user.email,
+              pfp: user.reloadUserInfo.photoUrl,
+            })
+              .then(() => {
+                console.log('Pushed Meet Database');
+              })
+              .catch((err) => console.log(err));
             onClose();
           })
           .catch((error) => console.log(error));
@@ -362,6 +390,7 @@ export default function Home() {
                   category={meet.category}
                   id={meet.id}
                   roomId={meet.roomId}
+                  check={navRef}
                 />
               ))
             ) : (
@@ -374,11 +403,9 @@ export default function Home() {
 
         {mType === '/co-work' && (
           <>
-            <Event src='/spectreseek.png' />
-            <Event src='/alterok.png' />
-            <Event src='/gaudmire.png' />
-            <Event src='/erevald.png' />
-            <CustomEvent />
+            {coWork.map((event, index) => (
+              <Event key={index} src='/cowork.jpeg' roomId={event.roomId} />
+            ))}
           </>
         )}
 

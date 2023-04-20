@@ -93,7 +93,8 @@ const Footer = () => {
             faq
           </p>
         </div>
-        {router.pathname === '/chat/[meet]/[id]' ? (
+        {router.pathname === '/chat/[meet]/[id]' &&
+        router.query.meet !== 'cowork' ? (
           <div className='flex items-center'>
             <div className='flex items-center bg-gray-100 text-gray-500 text-xs border-2 p-1 px-2 mr-3 rounded-full'>
               <svg
