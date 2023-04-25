@@ -176,6 +176,7 @@ export default function Home() {
             })
               .then(() => {
                 console.log('Pushed Meet Database');
+                window.location.reload();
               })
               .catch((err) => console.log(err));
             onClose();
@@ -404,7 +405,12 @@ export default function Home() {
         {mType === '/co-work' && (
           <>
             {coWork.map((event, index) => (
-              <Event key={index} src='/cowork.jpeg' roomId={event.roomId} />
+              <Event
+                key={index}
+                src='/lofi.jpg'
+                roomId={event.roomId}
+                check={navRef}
+              />
             ))}
           </>
         )}
@@ -413,53 +419,55 @@ export default function Home() {
           <Loader />
         </div> */}
       </div>
-      <div className='flex justify-center items-center max-w-xs mx-auto'>
-        <Tooltip
-          fontSize='xs'
-          borderRadius={'15px'}
-          label='Previous'
-          placement='left-end'
-        >
-          <svg
-            xmlns='http://www.w3.org/2000/svg'
-            fill='none'
-            viewBox='0 0 24 24'
-            strokeWidth={1.5}
-            stroke='currentColor'
-            className='w-6 h-6 stroke-2 cursor-pointer hover:text-gray-400 transition'
-            onClick={fetchPreviousDocuments}
+      {mType !== '/co-work' && (
+        <div className='flex justify-center items-center max-w-xs mx-auto'>
+          <Tooltip
+            fontSize='xs'
+            borderRadius={'15px'}
+            label='Previous'
+            placement='left-end'
           >
-            <path
-              strokeLinecap='round'
-              strokeLinejoin='round'
-              d='M15.75 19.5L8.25 12l7.5-7.5'
-            />
-          </svg>
-        </Tooltip>
+            <svg
+              xmlns='http://www.w3.org/2000/svg'
+              fill='none'
+              viewBox='0 0 24 24'
+              strokeWidth={1.5}
+              stroke='currentColor'
+              className='w-6 h-6 stroke-2 cursor-pointer hover:text-gray-400 transition'
+              onClick={fetchPreviousDocuments}
+            >
+              <path
+                strokeLinecap='round'
+                strokeLinejoin='round'
+                d='M15.75 19.5L8.25 12l7.5-7.5'
+              />
+            </svg>
+          </Tooltip>
 
-        <Tooltip
-          fontSize='xs'
-          borderRadius={'15px'}
-          label='Next'
-          placement='right-end'
-        >
-          <svg
-            xmlns='http://www.w3.org/2000/svg'
-            fill='none'
-            viewBox='0 0 24 24'
-            strokeWidth={1.5}
-            stroke='currentColor'
-            className='w-6 h-6 stroke-2 cursor-pointer hover:text-gray-400 transition'
-            onClick={fetchNextDocuments}
+          <Tooltip
+            fontSize='xs'
+            borderRadius={'15px'}
+            label='Next'
+            placement='right-end'
           >
-            <path
-              strokeLinecap='round'
-              strokeLinejoin='round'
-              d='M8.25 4.5l7.5 7.5-7.5 7.5'
-            />
-          </svg>
-        </Tooltip>
-      </div>
+            <svg
+              xmlns='http://www.w3.org/2000/svg'
+              fill='none'
+              viewBox='0 0 24 24'
+              strokeWidth={1.5}
+              stroke='currentColor'
+              className='w-6 h-6 stroke-2 cursor-pointer hover:text-gray-400 transition'
+              onClick={fetchNextDocuments}
+            >
+              <path
+                strokeLinecap='round'
+                strokeLinejoin='round'
+                d='M8.25 4.5l7.5 7.5-7.5 7.5'
+              />
+            </svg>
+          </Tooltip>
+        </div>
+      )}
     </div>
   );
 }

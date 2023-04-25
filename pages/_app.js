@@ -1,6 +1,7 @@
 import '../styles/globals.css';
 import { ChakraProvider } from '@chakra-ui/react';
 import { AuthContextProvider } from '../context/AuthContext';
+import { Analytics } from '@vercel/analytics/react';
 import Footer from '@/components/Footer';
 
 function MyApp({ Component, pageProps }) {
@@ -8,6 +9,7 @@ function MyApp({ Component, pageProps }) {
     <AuthContextProvider>
       <ChakraProvider>
         <Component {...pageProps} />
+        <Analytics />
         <Footer />
       </ChakraProvider>
     </AuthContextProvider>
